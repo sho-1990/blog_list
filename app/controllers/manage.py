@@ -1,14 +1,14 @@
 # -*- coding:utf-8 -*-
 
-from bottle import get, post, route, request, template
-from app.models.soup import a_list
+from bottle import get, post, route, request, template, error
+from app.models.soup import create_matome_list, analyze_urls
+from app.models import get_urls
 
 @route('/', method='GET')
 def soup():
 
-    url = {}
-    url['tetsugaku'] = 'http://blog.livedoor.jp/nwknews/'
-    url['oryorisokuho'] = 'http://oryouri.2chblog.jp/'
-    url['itsoku'] = 'http://blog.livedoor.jp/itsoku/'
+    matome_list = []
+    matome_list = create_matome_list(analyze_urls(get_urls.get_url_list()))
 
-    return template('1', i = a_list(url))
+    return template('1', i = matome_list)
+
